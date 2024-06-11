@@ -22,8 +22,8 @@
             <q-btn
               color="purple"
               class="full-width"
-              :onclick="() => getImageUrl()"
-              label="Compartilhar"
+              :onclick="() => downloadImage()"
+              label="Baixar"
               flat="true"
             />
           </div>
@@ -35,6 +35,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import fileSaver from "file-saver";
 
 defineOptions({
   name: "ImageRandomizer",
@@ -86,5 +87,9 @@ const getImageUrl = () => {
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+function downloadImage() {
+  fileSaver.saveAs(imagesUrl.value, "imagem-feliz");
 }
 </script>
