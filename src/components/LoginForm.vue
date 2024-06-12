@@ -24,9 +24,9 @@
       />
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn label="Acessar" type="submit" color="primary" />
         <q-btn
-          label="Reset"
+          label="Reiniciar"
           type="reset"
           color="primary"
           flat
