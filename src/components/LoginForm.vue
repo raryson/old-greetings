@@ -26,10 +26,9 @@
       <div>
         <q-btn label="Acessar" type="submit" color="primary" />
         <q-btn
-          label="Reiniciar"
-          type="reset"
-          color="primary"
-          flat
+          :onclick="() => onRegister()"
+          label="Criar Conta"
+          color="purple"
           class="q-ml-sm"
         />
       </div>
@@ -54,6 +53,27 @@ export default {
       username,
       password,
       isLogged,
+      async onRegister() {
+        const userisValid = await axios.post(
+          "https://rarysonpere-api-dos-vei-15.deno.dev/register",
+          { username: username.value, password: password.value }
+        );
+        if (!userisValid.data) {
+          $q.notify({
+            color: "red-4",
+            textColor: "white",
+            message: "Erro ao cadastrar, tente mais tarde!",
+          });
+        } else {
+          isLogged.value = true;
+          context.emit("callback-login");
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            message: "Cadastro feito com sucesso",
+          });
+        }
+      },
       async onSubmit() {
         const userisValid = await axios.post(
           "https://rarysonpere-api-dos-vei-15.deno.dev/login",
