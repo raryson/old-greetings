@@ -40,6 +40,7 @@
 <script>
 import { useQuasar } from "quasar";
 import { ref } from "vue";
+import axios from "axios";
 
 export default {
   setup(props, context) {
@@ -53,14 +54,26 @@ export default {
       username,
       password,
       isLogged,
-      onSubmit() {
-        isLogged.value = true;
-        context.emit("callback-login");
-        $q.notify({
-          color: "green-4",
-          textColor: "white",
-          message: "Login feito com sucesso",
-        });
+      async onSubmit() {
+        const userisValid = await axios.post(
+          "https://rarysonpere-api-dos-vei-15.deno.dev/login",
+          { username: username.value, password: password.value }
+        );
+        if (!userisValid.data) {
+          $q.notify({
+            color: "red-4",
+            textColor: "white",
+            message: "Dados incorretos",
+          });
+        } else {
+          isLogged.value = true;
+          context.emit("callback-login");
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            message: "Login feito com sucesso",
+          });
+        }
       },
 
       onReset() {
